@@ -23,7 +23,6 @@ const userSchema = new Schema(
     friends: {
         //Array of _id values referencing the User model (self-reference)
         },
-    assignments: [assignmentSchema],
   },
   {
     toJSON: {
@@ -32,6 +31,6 @@ const userSchema = new Schema(
   }
 );
 
-const Student = model('student', studentSchema);
+const User = model('user', userSchema);
 
-module.exports = Student;
+module.exports = User;
