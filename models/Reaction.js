@@ -27,6 +27,7 @@ const reactionSchema = new Schema(
     },
     id: false,
   }
+  //This will not be a model, but rather will be used as the reaction field's subdocument schema in the Thought model.
 );
 
-module.exports = assignmentSchema;
+module.exports = reactionSchema;
