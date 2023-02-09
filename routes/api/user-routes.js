@@ -11,7 +11,7 @@ const {
 
 //GET all users
 //POST a new user
-router.route('/api/users').get(getUsers).post(createUser);
+router.route('/').get(getUsers).post(createUser);
 
 //GET a single user by its _id and populated thought and friend data
 //PUT to update a user by its _id
