@@ -26,10 +26,18 @@ const userSchema = new Schema(
   },
   {
     toJSON: {
-      //Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
+      virtuals: true,
     },
+    id: false,
   }
 );
+//Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
+userSchema
+  .virtual('friendCount')
+  // Getter
+  .get(function () {
+    return //length of user's friends array;
+  });
 
 const User = model('user', userSchema);
 
