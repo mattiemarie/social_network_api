@@ -41,6 +41,14 @@ module.exports = {
             .then(() => res.json({ message: 'Thought and Users deleted!' }))
             .catch((err) => res.status(500).json(err));
     },
-    
+
     //UPDATE a Thought
-}
+    updateThought(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        )
+        .catch((err) => res.status(500).json(err));
+    },
+};
