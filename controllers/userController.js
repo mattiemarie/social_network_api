@@ -1,15 +1,40 @@
 const { ObjectId } = require('mongoose').Types;
-const { User, Thought } = require('../models');
+const User = require('../models/User');
 
-//What goes here?
+// Aggregate function to get the number of users overall
+const userCount = async () =>
+    User.aggregate()
+    .count('userCount')
+    .then((numberOfUsers) => numberOfUsers);
+
+//Do I need something here
 
 module.exports = {
     //GET all Users
-
+    getUsers(req, res) {
+      User.find()
+        .then((users) => res.json(users))
+        .catch((err) => res.status(500).json(err));
+    },
     //GET a single User
-
-    //CREATE a new User
-
+    getSingleUser(req, res) {
+      User.findOne({ _id: req.params.userId })
+        .select('-__v')
+        .populate('posts')
+        .then((user) =>
+          !user
+            ? res.status(404).json({ message: 'No user with that ID' })
+            : res.json(user)
+        )
+        .catch((err) => res.status(500).json(err));
+    },
+    //CREATE new User
+    createUser(req, res) {
+      User.create(req.body)
+        .then((dbUserData) => res.json(dbUserData))
+        .catch((err) => res.status(500).json(err));
+    },
+  
     //UPDATE a User
 
     //DELETE a User
