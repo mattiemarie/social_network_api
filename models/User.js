@@ -7,36 +7,43 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      //Unique
-      required: true,
-      //Trimmed
+      unique: true,
+      trim: true,
+      required: 'Usesrname is Required',
     },
     email: {
       type: String,
       required: true,
-      //Unique
-      //mongoose match validation
+      unique: true,
+      match: [/.+@.+\..+/]
     },
-    thoughts: {
-    //Array of _id values referencing the Thought model
-    },
-    friends: {
-        //Array of _id values referencing the User model (self-reference)
-        },
+    thought: [
+      {
+      type: Schema.Types.ObjectId,
+      ref: 'Thought'
+      }
+    ],
+    friends: [
+      {
+       type: Schema.Types.ObjectId,
+       ref: 'User'
+      }
+    ],
   },
-  {
+    {
     toJSON: {
       virtuals: true,
+      getters: true
     },
     id: false,
-  }
-);
+  
+  });
 //Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
 userSchema
   .virtual('friendCount')
   // Getter
   .get(function () {
-    return //length of user's friends array;
+    return this.friends.length;
   });
 
 const User = model('user', userSchema);
