@@ -52,7 +52,24 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
 
-    //ADD Reaction ???
+    //ADD Reaction
+    addReaction(req, res) {
+        Thought.findOneandUpdate(req.body)
+        .then((reaction) => res.json(reaction))
+        .catch((err) => {
+            console.log(err);
+            return res.status(500).json(err);
+        });
+    },
 
-    //REMOVE Reaction???
+
+    //REMOVE Reaction
+    deleteReaction(req, res) {
+        Thought.findOneAndUpdate(req.body)
+        .then((reaction) => res.json(reaction))
+        .catch((err) => {
+            console.log(err);
+            return res.status(500).json(err)
+        })
+    }
 };

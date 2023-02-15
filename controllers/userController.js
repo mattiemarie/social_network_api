@@ -16,6 +16,7 @@ module.exports = {
         .then((users) => res.json(users))
         .catch((err) => res.status(500).json(err));
     },
+
     //GET a single User
     getSingleUser(req, res) {
       User.findOne({ _id: req.params.userId })
@@ -28,6 +29,7 @@ module.exports = {
         )
         .catch((err) => res.status(500).json(err));
     },
+    
     //CREATE new User
     createUser(req, res) {
       User.create(req.body)
@@ -38,6 +40,16 @@ module.exports = {
     //UPDATE a User
 
     //DELETE a User
+    deleteUser(req, res) {
+        User.findOneAndDelete({ _id: req.params.userId })
+          .then((user) =>
+            !user
+              ? res.status(404).json({ message: 'No user with that ID' })
+              : Application.deleteMany({ _id: { $in: user.applications } })
+          )
+          .then(() => res.json({ message: 'User and associated apps deleted!' }))
+          .catch((err) => res.status(500).json(err));
+      },
 
     //ADD a Friend
     addFriend(req, res) {
