@@ -1,4 +1,4 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const reactionSchema = new Schema(
   {
@@ -8,7 +8,7 @@ const reactionSchema = new Schema(
     },
     reactionBody: {
       type: String,
-      required: true,
+      required: 'Body is required',
       maxlength: 280,
     },
     username: {
@@ -30,6 +30,6 @@ const reactionSchema = new Schema(
   //This will not be a model, but rather will be used as the reaction field's subdocument schema in the Thought model.
 );
 
-const Reaction = model('reaction', reactionSchema)
+// const Reaction = model('reaction', reactionSchema)
 
-module.exports = Reaction;
+module.exports = reactionSchema;
