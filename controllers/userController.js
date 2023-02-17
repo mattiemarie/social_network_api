@@ -1,15 +1,7 @@
-const { ObjectId } = require('mongoose').Types;
 const User = require('../models/User');
 
-// Aggregate function to get the number of users overall
-const userCount = async () =>
-    User.aggregate()
-    .count('userCount')
-    .then((numberOfUsers) => numberOfUsers);
+const userController = {
 
-//Do I need something here
-
-module.exports = {
     //GET all Users
     getUsers(req, res) {
       User.find()
@@ -38,6 +30,15 @@ module.exports = {
     },
   
     //UPDATE a User
+    updateUser( req, res) {
+      User.findOneAndUpdate({ _id: params.id}, body, {new:true})
+      .then((user) =>
+      !user
+        ? res.status(404).json({ message: 'No user with that ID'})
+        : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+    },
 
     //DELETE a User
     deleteUser(req, res) {
@@ -86,4 +87,6 @@ module.exports = {
           )
           .catch((err) => res.status(500).json(err));
       },
-}
+};
+
+module.exports = userController;
